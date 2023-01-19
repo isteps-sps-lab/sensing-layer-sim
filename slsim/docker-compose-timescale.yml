@@ -1,0 +1,59 @@
+version: '3.9'
+
+services:
+  mongodb:
+    container_name: mongodb
+    volumes:
+      - ./docker-volumes/mongo:/data/db
+    image: mongo:4.4
+    networks:
+      - simnetwork
+
+  orion:
+    container_name: orion
+    image: fiware/orion-ld:0.8.0
+    entrypoint: orionld -fg -multiservice -ngsiv1Autocast -dbhost mongodb -logLevel DEBUG
+    networks:
+      - simnetwork
+    ports:
+      - "1026:1026"
+    depends_on:
+      - mongodb
+
+  timescale:
+    container_name: timescale
+    hostname: timescale
+    image: timescale/timescaledb-postgis:2.3.0-pg13
+    volumes:
+      - ./docker-volumes/timescale:/home/postgres/pgdata/data
+    ports:
+      - "5432:5432"
+    networks:
+      - simnetwork
+    environment:
+      - POSTGRES_PASSWORD=*
+
+  quantumleap:
+    container_name: quantumleap
+    image: orchestracities/quantumleap:0.8.3
+    depends_on:
+      - timescale
+    networks:
+      - simnetwork
+    ports:
+      - "8668:8668"
+    environment:
+      - QL_DEFAULT_DB=timescale
+      - POSTGRES_HOST=timescale
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB_NAME=quantumleap
+      - POSTGRES_DB_USER=quantumleap
+      - POSTGRES_DB_PASS=*
+      - POSTGRES_USE_SSL=False
+      - USE_GEOCODING=False
+      - CACHE_QUERIES=False
+      - LOGLEVEL=DEBUG
+
+networks:
+  simnetwork:
+    driver: bridge

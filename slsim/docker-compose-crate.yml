@@ -1,0 +1,53 @@
+version: '3.9'
+
+services:
+  mongodb:
+    container_name: mongodb
+    volumes:
+      - ./docker-volumes/mongo:/data/db
+    image: mongo:4.4
+    networks:
+      - simnetwork
+
+  orion:
+    container_name: orion
+    image: fiware/orion-ld:0.8.0
+    entrypoint: orionld -fg -multiservice -ngsiv1Autocast -dbhost mongodb -logLevel DEBUG
+    networks:
+      - simnetwork
+    ports:
+      - "1026:1026"
+    depends_on:
+      - mongodb
+
+  crate:
+    container_name: crate
+    image: crate:4.5.1
+    command: crate -Cauth.host_based.enabled=false -Ccluster.name=democluster -Chttp.cors.enabled=true -Chttp.cors.allow-origin="*"
+    volumes:
+      - ./docker-volumes/cratedb:/data
+    ports:
+      - "4200:4200"
+      - "4300:4300"
+    networks:
+      - simnetwork
+
+  quantumleap:
+    container_name: quantumleap
+    image: orchestracities/quantumleap:0.8.3
+    depends_on:
+      - crate
+    networks:
+      - simnetwork
+    ports:
+      - "8668:8668"
+    environment:
+      - QL_DEFAULT_DB=crate
+      - CRATE_HOST=crate
+      - USE_GEOCODING=False
+      - CACHE_QUERIES=False
+      - LOGLEVEL=DEBUG
+
+networks:
+  simnetwork:
+    driver: bridge

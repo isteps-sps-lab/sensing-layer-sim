@@ -1,0 +1,84 @@
+{
+    "entities": [
+        {
+            "id": "urn:ngsi-ld:Wearable:1",
+            "type": "Wearable",
+            "wearableDevice": {
+                "type": "StructuredValue",
+                "value": {
+                    "name": "wearable",
+                    "description": "a wearable",
+                    "workerSession": {
+                        "session": {
+                            "start": {
+                                "dateTime": "2023-01-19T14:13:21.136433",
+                                "format": "iso",
+                                "timezoneId": "utc"
+                            },
+                            "end": null
+                        },
+                        "worker": {
+                            "workerId": "urn:ngsi-ld:Worker:1",
+                            "description": "a worker"
+                        }
+                    },
+                    "wearableAccelerometer": {
+                        "x": 0.5737632505231992,
+                        "y": 0.6737632505231992,
+                        "z": 0.7737632505231993
+                    },
+                    "deviceProperties": {
+                        "properties": {}
+                    }
+                }
+            },
+            "workerId": {
+                "type": "Text",
+                "value": "urn:ngsi-ld:Worker:1"
+            },
+            "sessionId": {
+                "type": "Text",
+                "value": "urn:ngsi-ld:Session:1"
+            },
+            "temperature": {
+                "type": "Number",
+                "value": 31.471310968091448
+            },
+            "gsr": {
+                "type": "Number",
+                "value": 0.6009687069997218
+            },
+            "heartRate": {
+                "type": "Number",
+                "value": 120.83513173937514
+            },
+            "rrInterval": {
+                "type": "Number",
+                "value": 487.6376841244678
+            },
+            "position": {
+                "type": "StructuredValue",
+                "value": {
+                    "latitude": -0.5,
+                    "longitude": 0.5
+                }
+            },
+            "timestamp": {
+                "type": "DateTime",
+                "value": "2023-01-19T14:14:10.812777",
+                "metadata": {
+                    "format": {
+                        "type": "Text",
+                        "value": "iso"
+                    },
+                    "timezoneId": {
+                        "type": "Text",
+                        "value": "utc"
+                    }
+                }
+            },
+            "metadata": {}
+        }
+    ],
+    "actionType": "append"
+}
