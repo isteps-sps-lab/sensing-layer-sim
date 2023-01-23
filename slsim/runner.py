@@ -16,7 +16,7 @@ def send_entities():
     try:
         # todo run multiple Samplers in parallel
         WorkerSampler(pool_size=1).sample(samples_n=1, sampling_rate=1.0)  # label perceived fatigue
-        WearableSampler(pool_size=1).sample(samples_n=10, sampling_rate=1.0)  # collect data for 5 minutes
+        WearableSampler(pool_size=1).sample(samples_n=300, sampling_rate=1.0)  # collect data for 5 minutes
     except Exception as e:
         print(e)
 
@@ -25,7 +25,7 @@ def run(env: str):
     services_running = False
     docker = DockerCompose(__file__,
                            docker_compose_file_name=f'docker-compose-{env}.yml',
-                           docker_compose_cmd=['docker-compose'])
+                           docker_compose_cmd=['docker', 'compose'])
     try:
         bootstrap(docker)
         services_running = True
