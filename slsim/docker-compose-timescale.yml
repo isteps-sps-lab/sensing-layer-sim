@@ -25,7 +25,7 @@ services:
     hostname: timescale
     image: timescale/timescaledb-postgis:2.3.0-pg13
     volumes:
-      - ./docker-volumes/timescale:/home/postgres/pgdata/data
+      - ./docker-volumes/timescale:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
