@@ -10,26 +10,6 @@ class Datetime(BaseModel):
     timezoneId: str
 
 
-class PerceivedFatigue(BaseModel):
-    level: FloatAttr
-    comment: TextAttr
-    timestamp: Datetime
-
-
-class WorkerStates(BaseModel):
-    perceivedFatigue: Optional[PerceivedFatigue]
-
-
-class WorkerStatesAttribute(Attr):
-    type = "WorkerStatesProperties"
-    value: WorkerStates
-
-
-class WorkerEntity(BaseEntity):
-    type = 'Worker'
-    workerStates: Optional[WorkerStatesAttribute]
-
-
 class Session(BaseModel):
     start: Datetime
     end: Optional[Datetime]
@@ -59,7 +39,7 @@ class WearableDevice(BaseModel):
     name: str
     description: str
     workerSession: WorkerSession
-    wearableAccelerometer: WearableAccelerometer
+    wearableAccelometer: WearableAccelerometer
     deviceProperties: DeviceProperties
 
 

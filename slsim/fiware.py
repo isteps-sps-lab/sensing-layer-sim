@@ -6,7 +6,6 @@ import json
 from typing import List, Optional
 from uri import URI
 
-
 ORION_EXTERNAL_BASE_URL = 'http://localhost:1026'
 QUANTUMLEAP_INTERNAL_BASE_URL = 'http://quantumleap:8668'
 QUANTUMLEAP_EXTERNAL_BASE_URL = 'http://localhost:8668'
@@ -27,10 +26,13 @@ QUANTUMLEAP_SUB = {
 }
 
 
-def orion_client(service_path: Optional[str] = None,
+def orion_client(uri: Optional[str] = ORION_EXTERNAL_BASE_URL,
+                 service: Optional[str] = None,
+                 service_path: Optional[str] = None,
                  correlator: Optional[str] = None) -> OrionClient:
-    base_url = URI(ORION_EXTERNAL_BASE_URL)
-    ctx = FiwareContext(service_path=service_path,
+    base_url = URI(uri)
+    ctx = FiwareContext(service=service,
+                        service_path=service_path,
                         correlator=correlator)
     return OrionClient(base_url, ctx)
 

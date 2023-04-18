@@ -1,7 +1,7 @@
 from fipy.docker import DockerCompose
 
+from slsim.__main__ import send_entities
 from slsim.fiware import wait_on_orion, create_subscriptions
-from slsim.sampler import WearableSampler, WorkerSampler
 
 
 def bootstrap(docker: DockerCompose):
@@ -10,15 +10,6 @@ def bootstrap(docker: DockerCompose):
 
     wait_on_orion()
     create_subscriptions()
-
-
-def send_entities():
-    try:
-        # todo run multiple Samplers in parallel
-        WorkerSampler(pool_size=1).sample(samples_n=1, sampling_rate=1.0)  # label perceived fatigue
-        WearableSampler(pool_size=1).sample(samples_n=300, sampling_rate=1.0)  # collect data for 5 minutes
-    except Exception as e:
-        print(e)
 
 
 def run(env: str):
@@ -30,9 +21,9 @@ def run(env: str):
         bootstrap(docker)
         services_running = True
 
-        print('>>> sending entities to Orion...')
+        print(f'>>> ORION URL: localhost:1026')
         while True:
-            send_entities()
+            send_entities(5, 300, 1.0)
 
     except KeyboardInterrupt:
         if services_running:

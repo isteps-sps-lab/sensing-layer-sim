@@ -31,6 +31,13 @@ $ charm .
 # ^ Pycharm or whatever floats your boat
 ```
 
+Build and run the Docker image
+
+```console
+$ docker build -t kitt4sme/sensing-layer-sim .
+$ docker run -e POOL_SIZE=5 -e SAMPLES_N=300 -e SAMPLING_RATE=1.0 -e TENANT=demo -e ORION_URI=http://localhost:1026 kitt4sme/sensing-layer-sim
+```
+
 ### Live simulator
 
 This test bed simulates a live environment similar
@@ -44,7 +51,7 @@ To start the show, run (Ctrl+C to stop)
 
 ```console
 $ poetry shell
-$ python slsim <crate|timescale>
+$ python slsim/tests/sim <crate|timescale>
 ```
 
 This will bring up the Docker compose environment (assuming you've
