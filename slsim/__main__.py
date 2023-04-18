@@ -17,10 +17,17 @@ def send_entities(pool_size: int, samples_n: int, sampling_rate: float,
 
 
 if __name__ == '__main__':
-    print(f'>>> ORION URL: {os.getenv("ORION_URI")}')
-    print(f'>>> ORION SVC: {os.getenv("TENANT")}')
-    send_entities(int(os.getenv('POOL_SIZE')),
-                  int(os.getenv('SAMPLES_N')),
-                  float(os.getenv('SAMPLING_RATE')),
-                  orion_client(os.getenv('ORION_URI'),
-                               os.getenv('TENANT')))
+    uri = os.getenv("ORION_URI")
+    tenant = os.getenv("TENANT")
+    it = int(os.getenv("ITERATIONS"))
+    print(f'> ORION URL: {uri}')
+    print(f'> ORION SVC: {tenant}')
+    print(f'> ITERATIONS: {it if it >= 0 else "infinite"}')
+    i = 0
+    while it - i != 0:
+        print(f'>>> ITERATION #{i+1}')
+        send_entities(int(os.getenv('POOL_SIZE')),
+                      int(os.getenv('SAMPLES_N')),
+                      float(os.getenv('SAMPLING_RATE')),
+                      orion_client(uri, tenant))
+        i = i + 1

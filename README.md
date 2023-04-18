@@ -35,8 +35,9 @@ Build and run the Docker image
 
 ```console
 $ docker build -t kitt4sme/sensing-layer-sim .
-$ docker run -e POOL_SIZE=5 -e SAMPLES_N=300 -e SAMPLING_RATE=1.0 -e TENANT=demo -e ORION_URI=http://localhost:1026 kitt4sme/sensing-layer-sim
+$ docker run -e POOL_SIZE=5 -e SAMPLES_N=300 -e SAMPLING_RATE=1.0 -e TENANT=demo -e ORION_URI=http://localhost:1026 ITERATIONS=5 kitt4sme/sensing-layer-sim
 ```
+> NOTE: set ITERATIONS = -1 for a never ending simulation.
 
 ### Live simulator
 
