@@ -1,5 +1,5 @@
 import random
-from datetime import datetime
+from datetime import datetime, timezone
 
 from fipy.sim.sampler import DevicePoolSampler
 
@@ -25,9 +25,9 @@ class WearableSampler(DevicePoolSampler):
                     workerSession=WorkerSession(
                         session=Session(
                             start=Datetime(
-                                dateTime=datetime.now().isoformat(),
-                                format="iso",
-                                timezoneId="utc"),
+                                dateTime=datetime.now(timezone.utc).isoformat(),
+                                format="ISO",
+                                timezoneId="UTC"),
                             end=None),
                         worker=Worker(workerId='urn:ngsi-ld:Worker:1',
                                       description="a worker")
@@ -48,10 +48,10 @@ class WearableSampler(DevicePoolSampler):
             rrInterval=FloatAttr.new(random.uniform(300, 500)),
             position=PositionAttr.new(Position(latitude=-.5, longitude=.5)),
             timestamp=DateTimeAttr(
-                value=datetime.now().isoformat(),
+                value=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
                 metadata=DateTimeMetadata(
-                    format=TextAttr(value='iso'),
-                    timezoneId=TextAttr(value='utc')
+                    format=TextAttr(value='ISO'),
+                    timezoneId=TextAttr(value='UTC')
                 )
             ),
             metadata={}  # if None, an exception occurs
